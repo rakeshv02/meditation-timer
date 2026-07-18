@@ -3,6 +3,9 @@ import React, { useState, useEffect, useRef } from 'react';
 // ─── Audio Engine ─────────────────────────────────────────────────────────────
 function createAudioEngine(soundType, volume) {
   const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  // Resume is required on iOS Safari and Chrome — even on button click
+  ctx.resume();
+
   const masterGain = ctx.createGain();
   masterGain.gain.setValueAtTime(volume, ctx.currentTime);
   masterGain.connect(ctx.destination);
@@ -10,7 +13,6 @@ function createAudioEngine(soundType, volume) {
   const nodes = [];
 
   if (soundType === 'bells') {
-    // Bell: decaying sine wave burst every ~8 seconds
     const playBell = () => {
       const osc = ctx.createOscillator();
       const env = ctx.createGain();
@@ -19,68 +21,66 @@ function createAudioEngine(soundType, volume) {
       osc.frequency.value = 432;
       osc.type = 'sine';
       env.gain.setValueAtTime(0, ctx.currentTime);
-      env.gain.linearRampToValueAtTime(0.8, ctx.currentTime + 0.01);
+      env.gain.linearRampToValueAtTime(1.0, ctx.currentTime + 0.01);
       env.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 4);
       osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 4.1);
+      osc.stop(ctx.currentTime + 4.2);
     };
     playBell();
     const interval = setInterval(playBell, 8000);
     nodes.push({ interval });
   } else {
-    // Noise-based sounds (rain, forest, ocean, wind)
-    const bufferSize = ctx.sampleRate * 4; // 4 second buffer, looped
+    // Use white noise (full ±1 amplitude) — much louder than filtered pink noise
+    const bufferSize = ctx.sampleRate * 3;
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const data = buffer.getChannelData(0);
-
-    // Generate pink-ish noise
-    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0;
     for (let i = 0; i < bufferSize; i++) {
-      const white = Math.random() * 2 - 1;
-      b0 = 0.99886 * b0 + white * 0.0555179;
-      b1 = 0.99332 * b1 + white * 0.0750759;
-      b2 = 0.96900 * b2 + white * 0.1538520;
-      b3 = 0.86650 * b3 + white * 0.3104856;
-      b4 = 0.55000 * b4 + white * 0.5329522;
-      b5 = -0.7616 * b5 - white * 0.0168980;
-      data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + white * 0.5362) / 7;
+      data[i] = Math.random() * 2 - 1;
     }
 
     const source = ctx.createBufferSource();
     source.buffer = buffer;
     source.loop = true;
 
-    // Shape the noise with a filter per sound type
+    // Booster so filtering doesn't silence the signal
+    const booster = ctx.createGain();
+    booster.gain.value = 2.5;
+
     const filter = ctx.createBiquadFilter();
 
     if (soundType === 'rain') {
+      // White noise highpass → crisp rain hiss
       filter.type = 'highpass';
-      filter.frequency.value = 1000;
+      filter.frequency.value = 2000;
       filter.Q.value = 0.5;
     } else if (soundType === 'forest') {
+      // Bandpass centred on mid frequencies → rustling leaves
       filter.type = 'bandpass';
-      filter.frequency.value = 800;
-      filter.Q.value = 0.3;
+      filter.frequency.value = 1200;
+      filter.Q.value = 0.8;
     } else if (soundType === 'ocean') {
+      // Lowpass → deep ocean rumble
       filter.type = 'lowpass';
-      filter.frequency.value = 600;
-      filter.Q.value = 1;
-    } else if (soundType === 'wind') {
-      filter.type = 'lowpass';
-      filter.frequency.value = 400;
+      filter.frequency.value = 800;
       filter.Q.value = 0.5;
+    } else if (soundType === 'wind') {
+      // Lowpass at lower freq → soft wind whoosh
+      filter.type = 'lowpass';
+      filter.frequency.value = 500;
+      filter.Q.value = 0.3;
     }
 
-    source.connect(filter);
+    source.connect(booster);
+    booster.connect(filter);
 
-    // For ocean: add a slow LFO to simulate wave rhythm
+    // Ocean: slow LFO for wave swell rhythm
     if (soundType === 'ocean') {
       const lfo = ctx.createOscillator();
       const lfoGain = ctx.createGain();
-      lfo.frequency.value = 0.12; // one wave every ~8 seconds
-      lfoGain.gain.value = 0.4;
+      lfo.frequency.value = 0.1;
+      lfoGain.gain.value = 0.5;
       lfo.connect(lfoGain);
-      lfoGain.connect(masterGain.gain);
+      lfoGain.connect(booster.gain);
       lfo.start();
       nodes.push(lfo);
     }
