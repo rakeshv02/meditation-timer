@@ -1,64 +1,171 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+// ─── Audio Engine ─────────────────────────────────────────────────────────────
+function createAudioEngine(soundType, volume) {
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const masterGain = ctx.createGain();
+  masterGain.gain.setValueAtTime(volume, ctx.currentTime);
+  masterGain.connect(ctx.destination);
+
+  const nodes = [];
+
+  if (soundType === 'bells') {
+    // Bell: decaying sine wave burst every ~8 seconds
+    const playBell = () => {
+      const osc = ctx.createOscillator();
+      const env = ctx.createGain();
+      osc.connect(env);
+      env.connect(masterGain);
+      osc.frequency.value = 432;
+      osc.type = 'sine';
+      env.gain.setValueAtTime(0, ctx.currentTime);
+      env.gain.linearRampToValueAtTime(0.8, ctx.currentTime + 0.01);
+      env.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 4);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 4.1);
+    };
+    playBell();
+    const interval = setInterval(playBell, 8000);
+    nodes.push({ interval });
+  } else {
+    // Noise-based sounds (rain, forest, ocean, wind)
+    const bufferSize = ctx.sampleRate * 4; // 4 second buffer, looped
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+
+    // Generate pink-ish noise
+    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0;
+    for (let i = 0; i < bufferSize; i++) {
+      const white = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + white * 0.5362) / 7;
+    }
+
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+    source.loop = true;
+
+    // Shape the noise with a filter per sound type
+    const filter = ctx.createBiquadFilter();
+
+    if (soundType === 'rain') {
+      filter.type = 'highpass';
+      filter.frequency.value = 1000;
+      filter.Q.value = 0.5;
+    } else if (soundType === 'forest') {
+      filter.type = 'bandpass';
+      filter.frequency.value = 800;
+      filter.Q.value = 0.3;
+    } else if (soundType === 'ocean') {
+      filter.type = 'lowpass';
+      filter.frequency.value = 600;
+      filter.Q.value = 1;
+    } else if (soundType === 'wind') {
+      filter.type = 'lowpass';
+      filter.frequency.value = 400;
+      filter.Q.value = 0.5;
+    }
+
+    source.connect(filter);
+
+    // For ocean: add a slow LFO to simulate wave rhythm
+    if (soundType === 'ocean') {
+      const lfo = ctx.createOscillator();
+      const lfoGain = ctx.createGain();
+      lfo.frequency.value = 0.12; // one wave every ~8 seconds
+      lfoGain.gain.value = 0.4;
+      lfo.connect(lfoGain);
+      lfoGain.connect(masterGain.gain);
+      lfo.start();
+      nodes.push(lfo);
+    }
+
+    filter.connect(masterGain);
+    source.start();
+    nodes.push(source);
+  }
+
+  return { ctx, masterGain, nodes };
+}
+
+function stopAudioEngine(engine) {
+  if (!engine) return;
+  try {
+    engine.nodes.forEach(n => {
+      if (n.interval) clearInterval(n.interval);
+      else n.stop();
+    });
+    engine.ctx.close();
+  } catch (_) {}
+}
+
+// ─── Component ────────────────────────────────────────────────────────────────
 const MeditationTimer = () => {
   const [selectedDuration, setSelectedDuration] = useState(10);
-  const [selectedSound, setSelectedSound] = useState('rain');
-  const [isRunning, setIsRunning] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(10 * 60);
-  const [volume, setVolume] = useState(0.5);
+  const [selectedSound, setSelectedSound]       = useState('rain');
+  const [isRunning, setIsRunning]               = useState(false);
+  const [timeLeft, setTimeLeft]                 = useState(10 * 60);
+  const [volume, setVolume]                     = useState(0.5);
   const [sessionsCompleted, setSessionsCompleted] = useState(0);
-  const audioRef = useRef(null);
-  const timerRef = useRef(null);
+
+  const engineRef  = useRef(null);
+  const timerRef   = useRef(null);
 
   const sounds = {
-    rain: { name: 'Rain' },
-    forest: { name: 'Forest' },
-    ocean: { name: 'Ocean Waves' },
-    wind: { name: 'Wind' },
-    bells: { name: 'Tibetan Bells' },
-    silence: { name: 'Silence' }
+    rain:    { name: '🌧️ Rain' },
+    forest:  { name: '🌲 Forest' },
+    ocean:   { name: '🌊 Ocean Waves' },
+    wind:    { name: '💨 Wind' },
+    bells:   { name: '🔔 Tibetan Bells' },
+    silence: { name: '🤫 Silence' },
   };
 
-  const playAmbientSound = (soundType) => {
-    if (soundType === 'silence') return;
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    gainNode.gain.value = volume * 0.1;
-    const frequencies = { rain: 40, forest: 60, ocean: 50, wind: 35, bells: 432 };
-    oscillator.frequency.value = frequencies[soundType] || 50;
-    oscillator.type = soundType === 'bells' ? 'sine' : 'triangle';
-    oscillator.start();
-    audioRef.current = { oscillator, gainNode, audioContext };
-  };
-
+  // Timer tick
   useEffect(() => {
     if (isRunning && timeLeft > 0) {
-      timerRef.current = setTimeout(() => {
-        setTimeLeft(timeLeft - 1);
-      }, 1000);
+      timerRef.current = setTimeout(() => setTimeLeft(t => t - 1), 1000);
     } else if (timeLeft === 0 && isRunning) {
       setIsRunning(false);
-      setSessionsCompleted(sessionsCompleted + 1);
+      setSessionsCompleted(s => s + 1);
+      stopAudioEngine(engineRef.current);
+      engineRef.current = null;
     }
     return () => clearTimeout(timerRef.current);
-  }, [isRunning, timeLeft, selectedDuration, sessionsCompleted]);
+  }, [isRunning, timeLeft]);
+
+  // Real-time volume control
+  useEffect(() => {
+    if (engineRef.current) {
+      engineRef.current.masterGain.gain.setValueAtTime(
+        volume,
+        engineRef.current.ctx.currentTime
+      );
+    }
+  }, [volume]);
 
   const handleStart = () => {
-    if (!isRunning) {
-      setIsRunning(true);
-      if (selectedSound !== 'silence') playAmbientSound(selectedSound);
+    if (isRunning) return;
+    setIsRunning(true);
+    if (selectedSound !== 'silence') {
+      engineRef.current = createAudioEngine(selectedSound, volume);
     }
   };
 
   const handlePause = () => {
     setIsRunning(false);
+    stopAudioEngine(engineRef.current);
+    engineRef.current = null;
   };
 
   const handleReset = () => {
     setIsRunning(false);
+    stopAudioEngine(engineRef.current);
+    engineRef.current = null;
     setTimeLeft(selectedDuration * 60);
   };
 
@@ -70,71 +177,200 @@ const MeditationTimer = () => {
   };
 
   const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
   };
 
   const totalSeconds = selectedDuration * 60;
-  const progress = ((totalSeconds - timeLeft) / totalSeconds) * 100;
+  const progress     = ((totalSeconds - timeLeft) / totalSeconds) * 100;
+  const circumference = 565.48;
+
+  // ── Styles ──────────────────────────────────────────────────────────────────
+  const S = {
+    page: {
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #f9f7f2 0%, #f5f1e8 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 24,
+      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+    },
+    wrap: { maxWidth: 420, width: '100%' },
+    heading: { textAlign: 'center', marginBottom: 32 },
+    h1: { fontSize: 32, fontWeight: 700, color: '#111827', margin: '0 0 8px' },
+    subtitle: { fontSize: 14, color: '#6b7280', margin: 0 },
+    card: {
+      background: 'white',
+      borderRadius: 24,
+      boxShadow: '0 20px 60px rgba(0,0,0,0.1)',
+      padding: 32,
+      marginBottom: 16,
+    },
+    ringWrap: {
+      position: 'relative',
+      width: 192,
+      height: 192,
+      margin: '0 auto 24px',
+    },
+    timeLabel: {
+      position: 'absolute',
+      inset: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column',
+    },
+    time: { fontSize: 44, fontWeight: 700, color: '#111827', lineHeight: 1 },
+    status: { fontSize: 13, color: '#9ca3af', marginTop: 6 },
+    sessionBar: { textAlign: 'center', marginBottom: 20, fontSize: 13, color: '#6b7280' },
+    sectionLabel: {
+      fontSize: 13,
+      fontWeight: 600,
+      color: '#374151',
+      marginBottom: 10,
+      display: 'block',
+    },
+    durationGrid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(5, 1fr)',
+      gap: 8,
+      marginBottom: 20,
+    },
+    soundGrid: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: 8,
+      marginBottom: 20,
+    },
+    volRow: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 12,
+      marginBottom: 24,
+    },
+    btnRow: { display: 'flex', gap: 12 },
+    footer: { textAlign: 'center', fontSize: 13, color: '#9ca3af' },
+  };
+
+  const durationBtn = (d) => ({
+    padding: '8px 4px',
+    borderRadius: 10,
+    border: 'none',
+    cursor: isRunning ? 'not-allowed' : 'pointer',
+    fontWeight: 600,
+    fontSize: 13,
+    background: selectedDuration === d ? '#2563eb' : '#f3f4f6',
+    color:      selectedDuration === d ? 'white'    : '#374151',
+    opacity:    isRunning ? 0.6 : 1,
+    transition: 'all 0.15s',
+  });
+
+  const soundBtn = (key) => ({
+    padding: '10px 12px',
+    borderRadius: 10,
+    border: 'none',
+    cursor: isRunning ? 'not-allowed' : 'pointer',
+    fontSize: 13,
+    fontWeight: 500,
+    background: selectedSound === key ? '#2563eb' : '#f3f4f6',
+    color:      selectedSound === key ? 'white'    : '#374151',
+    opacity:    isRunning ? 0.6 : 1,
+    transition: 'all 0.15s',
+    textAlign: 'left',
+  });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f9f7f2] to-[#f5f1e8] p-6 flex items-center justify-center">
-      <div className="max-w-md w-full">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>Meditation Timer</h1>
-          <p className="text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>Find peace in just minutes • 100% free • No sign-up</p>
+    <div style={S.page}>
+      <div style={S.wrap}>
+
+        {/* Header */}
+        <div style={S.heading}>
+          <h1 style={S.h1}>🧘 Meditation Timer</h1>
+          <p style={S.subtitle}>Find peace in just minutes · Free · No sign-up</p>
         </div>
-        <div className="bg-white rounded-3xl shadow-2xl p-8 mb-6">
-          <div className="relative w-48 h-48 mx-auto mb-6">
-            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 200 200">
-              <circle cx="100" cy="100" r="90" fill="none" stroke="#e5e7eb" strokeWidth="8" />
-              <circle cx="100" cy="100" r="90" fill="none" stroke="#2563eb" strokeWidth="8" strokeDasharray={`${(progress / 100) * 565.48} 565.48`} strokeLinecap="round" style={{ transition: 'stroke-dasharray 1s linear' }} />
+
+        <div style={S.card}>
+
+          {/* Progress ring */}
+          <div style={S.ringWrap}>
+            <svg width="192" height="192" style={{ transform: 'rotate(-90deg)' }}>
+              <circle cx="96" cy="96" r="84" fill="none" stroke="#f3f4f6" strokeWidth="8" />
+              <circle
+                cx="96" cy="96" r="84"
+                fill="none"
+                stroke="#2563eb"
+                strokeWidth="8"
+                strokeLinecap="round"
+                strokeDasharray={`${(progress / 100) * circumference} ${circumference}`}
+                style={{ transition: 'stroke-dasharray 1s linear' }}
+              />
             </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-5xl font-bold text-gray-900" style={{ fontFamily: 'Inter, sans-serif' }}>{formatTime(timeLeft)}</div>
-                <p className="text-sm text-gray-500 mt-2" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  {isRunning ? 'Breathing...' : 'Ready to meditate'}
-                </p>
-              </div>
+            <div style={S.timeLabel}>
+              <div style={S.time}>{formatTime(timeLeft)}</div>
+              <div style={S.status}>{isRunning ? '✨ Breathing...' : 'Ready to meditate'}</div>
             </div>
           </div>
-          <div className="text-center mb-6">
-            <p className="text-sm text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>
-              Sessions: <span className="font-bold text-blue-600">{sessionsCompleted}</span>
-            </p>
+
+          {/* Sessions */}
+          <div style={S.sessionBar}>
+            Sessions completed: <strong style={{ color: '#2563eb' }}>{sessionsCompleted}</strong>
           </div>
-          <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>Duration</label>
-            <div className="grid grid-cols-5 gap-2">
-              {[5, 10, 15, 20, 30].map((duration) => (
-                <button key={duration} onClick={() => handleDurationChange(duration)} disabled={isRunning} className={`py-2 px-2 rounded-lg font-semibold text-sm ${selectedDuration === duration ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'}`}>{duration}m</button>
-              ))}
-            </div>
+
+          {/* Duration */}
+          <label style={S.sectionLabel}>Duration</label>
+          <div style={S.durationGrid}>
+            {[5, 10, 15, 20, 30].map(d => (
+              <button key={d} style={durationBtn(d)} onClick={() => handleDurationChange(d)} disabled={isRunning}>
+                {d}m
+              </button>
+            ))}
           </div>
-          <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>Sound</label>
-            <div className="grid grid-cols-2 gap-2">
-              {Object.entries(sounds).map(([key, { name }]) => (
-                <button key={key} onClick={() => setSelectedSound(key)} disabled={isRunning} className={`py-2 px-3 rounded-lg text-sm ${selectedSound === key ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'}`}>{name}</button>
-              ))}
-            </div>
+
+          {/* Sound */}
+          <label style={S.sectionLabel}>Ambient Sound</label>
+          <div style={S.soundGrid}>
+            {Object.entries(sounds).map(([key, { name }]) => (
+              <button key={key} style={soundBtn(key)} onClick={() => setSelectedSound(key)} disabled={isRunning}>
+                {name}
+              </button>
+            ))}
           </div>
-          <div className="mb-6">
-            <div className="flex items-center gap-3">
-              <span className="text-sm font-semibold text-gray-700" style={{ fontFamily: 'Inter, sans-serif' }}>Volume</span>
-              <input type="range" min="0" max="1" step="0.1" value={volume} onChange={(e) => setVolume(parseFloat(e.target.value))} className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500" />
-              <span className="text-sm text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>{Math.round(volume * 100)}%</span>
-            </div>
+
+          {/* Volume */}
+          <div style={S.volRow}>
+            <span style={{ fontSize: 13, fontWeight: 600, color: '#374151', whiteSpace: 'nowrap' }}>
+              🔊 Volume
+            </span>
+            <input
+              type="range" min="0" max="1" step="0.05" value={volume}
+              onChange={e => setVolume(parseFloat(e.target.value))}
+              style={{ flex: 1, accentColor: '#2563eb' }}
+            />
+            <span style={{ fontSize: 13, color: '#6b7280', minWidth: 32, textAlign: 'right' }}>
+              {Math.round(volume * 100)}%
+            </span>
           </div>
-          <div className="flex gap-3">
-            {!isRunning ? <button onClick={handleStart} className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">▶ Start</button> : <button onClick={handlePause} className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg">⏸ Pause</button>}
-            <button onClick={handleReset} className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-3 px-4 rounded-lg">Reset</button>
+
+          {/* Controls */}
+          <div style={S.btnRow}>
+            {!isRunning
+              ? <button onClick={handleStart} style={{ flex: 1, background: '#2563eb', color: 'white', border: 'none', borderRadius: 12, padding: '14px 0', fontWeight: 700, fontSize: 15, cursor: 'pointer' }}>
+                  ▶ Start
+                </button>
+              : <button onClick={handlePause} style={{ flex: 1, background: '#f59e0b', color: 'white', border: 'none', borderRadius: 12, padding: '14px 0', fontWeight: 700, fontSize: 15, cursor: 'pointer' }}>
+                  ⏸ Pause
+                </button>
+            }
+            <button onClick={handleReset} style={{ flex: 1, background: '#f3f4f6', color: '#374151', border: 'none', borderRadius: 12, padding: '14px 0', fontWeight: 700, fontSize: 15, cursor: 'pointer' }}>
+              ↺ Reset
+            </button>
           </div>
         </div>
-        <div className="text-center text-sm text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>
-          <p>✓ 100% private • No sign-ups • Runs on your device</p>
+
+        <div style={S.footer}>
+          ✓ 100% private · No sign-ups · Runs on your device
         </div>
       </div>
     </div>
