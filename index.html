@@ -1,36 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Meditation Timer — Free Online Timer with Ambient Sounds | Tabutility</title>
-    <meta name="description" content="Free meditation timer with ambient sounds. Choose duration, background sounds like rain, forest, and ocean, and track your sessions. 100% private — runs on your device. No sign-up." />
-    <meta name="keywords" content="meditation timer, free meditation timer, timer with ambient sounds, mindfulness timer, meditation app, rain sounds, focus timer" />
-    <link rel="canonical" href="https://meditation-timer.tabutility.com/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://meditation-timer.tabutility.com/" />
-    <meta property="og:title" content="Meditation Timer — Free Online Timer with Ambient Sounds" />
-    <meta property="og:description" content="Free meditation timer with ambient sounds. Choose duration and background sounds. 100% private, no sign-up." />
-    <meta property="og:site_name" content="Tabutility" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Meditation Timer — Free Online Timer with Ambient Sounds" />
-    <meta name="twitter:description" content="Free meditation timer with ambient sounds. 100% private, no sign-up." />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧘</text></svg>" />
-    <meta name="robots" content="index, follow" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7039091592734005" crossorigin="anonymous"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-78VZWJ5B1W"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-78VZWJ5B1W');
-    </script>
-    <script type="application/ld+json">
-    { "@context": "https://schema.org", "@type": "WebApplication", "name": "Meditation Timer", "url": "https://meditation-timer.tabutility.com", "description": "Free meditation timer with ambient sounds. Choose duration and background sounds. 100% private.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }, "provider": { "@type": "Organization", "name": "Tabutility", "url": "https://tabutility.com" } }
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Meditation Timer — Tabutility</title>
+<meta name="description" content="Free online meditation timer. Set a duration with gentle bell sounds at start, interval and end. No account needed."/>
+<meta name="keywords" content="meditation timer, online meditation timer, mindfulness timer, meditation bell, guided meditation timer"/>
+<link rel="canonical" href="https://meditation-timer.tabutility.com/"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧘</text></svg>"/>
+<meta property="og:title" content="Meditation Timer"/>
+<meta property="og:description" content="Free online meditation timer with gentle bell sounds. No account needed."/>
+<meta property="og:url" content="https://meditation-timer.tabutility.com/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Tabutility"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Meditation Timer"/>
+<meta name="twitter:description" content="Free online meditation timer with gentle bell sounds. No account needed."/>
+<meta name="robots" content="index, follow"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-78VZWJ5B1W"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-78VZWJ5B1W');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7039091592734005" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Meditation Timer","url":"https://meditation-timer.tabutility.com/","description":"Free online meditation timer. Set a duration with gentle bell sounds at start, interval and end. No account needed.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"provider":{"@type":"Organization","name":"Tabutility","url":"https://tabutility.com"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tabutility","item":"https://tabutility.com"},{"@type":"ListItem","position":2,"name":"Wellness","item":"https://tabutility.com"},{"@type":"ListItem","position":3,"name":"Meditation Timer","item":"https://meditation-timer.tabutility.com/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does the timer work when my screen is off?","acceptedAnswer":{"@type":"Answer","text":"Yes — as long as your browser tab is active, the timer continues running."}},{"@type":"Question","name":"Does it make a sound?","acceptedAnswer":{"@type":"Answer","text":"Yes — plays a gentle bell sound at the end using your browser's audio."}},{"@type":"Question","name":"Is the Meditation Timer free?","acceptedAnswer":{"@type":"Answer","text":"Yes — completely free, no sign-up needed."}},{"@type":"Question","name":"Do I need to sign up?","acceptedAnswer":{"@type":"Answer","text":"No account needed — works instantly in your browser."}}]}</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh}
+nav{background:#1e293b;border-bottom:1px solid #334155;padding:14px 24px;display:flex;align-items:center;gap:16px}
+nav a{color:#94a3b8;text-decoration:none;font-size:14px}nav a:hover{color:#f1f5f9}
+nav .brand{color:#38bdf8;font-weight:700;font-size:18px}
+.ad-banner{background:#1e293b;border-bottom:1px solid #334155;padding:4px;text-align:center}
+#app{max-width:600px;margin:8px auto;padding:0 16px 40px}
+h1{font-size:26px;font-weight:800;margin:24px 0 4px;text-align:center}
+.subtitle{color:#94a3b8;text-align:center;font-size:14px;margin-bottom:24px}
+.card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:24px;margin-bottom:16px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:20px}
+.preset-btn{background:#0f172a;border:1px solid #334155;color:#94a3b8;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;transition:all .2s}
+.preset-btn:hover,.preset-btn.active{background:#38bdf8;border-color:#38bdf8;color:#0f172a;font-weight:600}
+.custom-row{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:20px}
+.custom-row label{color:#94a3b8;font-size:13px}
+.custom-row input{background:#0f172a;border:1px solid #334155;color:#f1f5f9;padding:8px 12px;border-radius:8px;font-size:14px;width:80px;text-align:center}
+.circle-wrap{display:flex;justify-content:center;margin:20px 0}
+.progress-ring{transform:rotate(-90deg)}
+.progress-ring__bg{fill:none;stroke:#1e3a5f;stroke-width:10}
+.progress-ring__circle{fill:none;stroke:#38bdf8;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .5s linear}
+.timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.timer-display{font-size:42px;font-weight:800;letter-spacing:2px;color:#f1f5f9}
+.timer-label{font-size:12px;color:#94a3b8;margin-top:4px}
+.ring-container{position:relative;width:200px;height:200px}
+.controls{display:flex;gap:12px;justify-content:center;margin-top:16px}
+.btn{padding:12px 28px;border-radius:10px;border:none;cursor:pointer;font-size:15px;font-weight:600;transition:all .2s}
+.btn-primary{background:#38bdf8;color:#0f172a}.btn-primary:hover{background:#0ea5e9}
+.btn-secondary{background:#334155;color:#f1f5f9}.btn-secondary:hover{background:#475569}
+.btn-danger{background:#ef4444;color:#fff}.btn-danger:hover{background:#dc2626}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.opt-group label{display:block;font-size:12px;color:#94a3b8;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.opt-group select{width:100%;background:#0f172a;border:1px solid #334155;color:#f1f5f9;padding:8px 10px;border-radius:8px;font-size:14px}
+.status-bar{text-align:center;padding:10px;font-size:13px;color:#38bdf8;min-height:36px}
+@media(max-width:480px){.options{grid-template-columns:1fr}.timer-display{font-size:34px}}
+</style>
+</head>
+<body>
+<nav><span class="brand">⚡ Tabutility</span><a href="https://tabutility.com">← All Tools</a></nav>
+<div class="ad-banner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7039091592734005" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+<div id="app">
+  <h1>🧘 Meditation Timer</h1>
+  <p class="subtitle">Set your session duration, relax, and let the bell guide you.</p>
+  <div class="card">
+    <div class="presets">
+      <button class="preset-btn" onclick="setPreset(5)">5 min</button>
+      <button class="preset-btn active" onclick="setPreset(10)">10 min</button>
+      <button class="preset-btn" onclick="setPreset(15)">15 min</button>
+      <button class="preset-btn" onclick="setPreset(20)">20 min</button>
+      <button class="preset-btn" onclick="setPreset(30)">30 min</button>
+    </div>
+    <div class="custom-row">
+      <label>Custom:</label>
+      <input type="number" id="customMin" min="1" max="120" value="10" oninput="setCustom()"/> <span style="color:#94a3b8;font-size:14px">min</span>
+    </div>
+    <div class="options">
+      <div class="opt-group">
+        <label>Interval Bell</label>
+        <select id="intervalSel">
+          <option value="0">None</option>
+          <option value="5">Every 5 min</option>
+          <option value="10">Every 10 min</option>
+          <option value="15">Every 15 min</option>
+        </select>
+      </div>
+      <div class="opt-group">
+        <label>Sound</label>
+        <select id="soundSel">
+          <option value="bell">Bell</option>
+          <option value="bowl">Singing Bowl</option>
+          <option value="none">Silent</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="text-align:center">
+    <div class="circle-wrap">
+      <div class="ring-container">
+        <svg class="progress-ring" width="200" height="200">
+          <circle class="progress-ring__bg" cx="100" cy="100" r="88"/>
+          <circle class="progress-ring__circle" id="progressCircle" cx="100" cy="100" r="88" stroke-dasharray="552.9" stroke-dashoffset="0"/>
+        </svg>
+        <div class="timer-text">
+          <div class="timer-display" id="timerDisplay">10:00</div>
+          <div class="timer-label" id="timerLabel">Ready</div>
+        </div>
+      </div>
+    </div>
+    <div class="status-bar" id="statusBar">Press Start to begin your session</div>
+    <div class="controls">
+      <button class="btn btn-primary" id="startBtn" onclick="startPause()">▶ Start</button>
+      <button class="btn btn-secondary" onclick="resetTimer()">↺ Reset</button>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:860px;margin-left:auto;margin-right:auto;margin-top:24px;margin-bottom:8px;padding:0 16px">
+  <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px 24px">
+    <h2 style="font-size:15px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px">Related Tools</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+      <a href="https://pomodoro-timer.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">Pomodoro Timer</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:2px">Productivity</div>
+      </a>
+      <a href="https://sleep-calculator.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">Sleep Calculator</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:2px">Wellness</div>
+      </a>
+      <a href="https://water-intake-calculator.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">Water Intake Calculator</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:2px">Wellness</div>
+      </a>
+      <a href="https://countdown-timer.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">Countdown Timer</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:2px">Productivity</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:860px;margin-left:auto;margin-right:auto;margin-top:8px;margin-bottom:24px;padding:0 16px">
+  <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px 24px">
+    <h2 style="font-size:15px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Frequently Asked Questions</h2>
+    <div style="border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0">
+      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px">Does the timer work when my screen is off?</div>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.5">Yes — as long as your browser tab is active, the timer continues running.</div>
+    </div>
+    <div style="border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0">
+      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px">Does it make a sound?</div>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.5">Yes — plays a gentle bell sound at the end (and at intervals if set) using your browser's Web Audio API.</div>
+    </div>
+    <div style="border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0">
+      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px">Is this free?</div>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.5">Yes — completely free, no sign-up needed.</div>
+    </div>
+    <div style="padding:14px 0">
+      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px">Works on mobile?</div>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.5">Yes — fully responsive and works on any device.</div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:8px">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7039091592734005" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
+<script>
+const CIRCUMFERENCE = 2 * Math.PI * 88;
+let totalSeconds = 600;
+let remainingSeconds = 600;
+let running = false;
+let interval = null;
+let intervalBellSecs = 0;
+let elapsedSecs = 0;
+let audioCtx = null;
+
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playBell(type) {
+  const sel = document.getElementById('soundSel').value;
+  if (sel === 'none') return;
+  try {
+    const ctx = getAudioCtx();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    if (sel === 'bowl') {
+      o.type = 'sine';
+      o.frequency.setValueAtTime(432, ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(380, ctx.currentTime + 2);
+      g.gain.setValueAtTime(0.4, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 3);
+      o.start(); o.stop(ctx.currentTime + 3);
+    } else {
+      o.type = 'sine';
+      o.frequency.setValueAtTime(880, ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(660, ctx.currentTime + 1.5);
+      g.gain.setValueAtTime(0.5, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.8);
+      o.start(); o.stop(ctx.currentTime + 1.8);
+    }
+  } catch(e){}
+}
+
+function setPreset(min) {
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('customMin').value = min;
+  totalSeconds = min * 60;
+  remainingSeconds = totalSeconds;
+  elapsedSecs = 0;
+  if (!running) updateDisplay();
+}
+
+function setCustom() {
+  const v = parseInt(document.getElementById('customMin').value) || 10;
+  totalSeconds = v * 60;
+  remainingSeconds = totalSeconds;
+  elapsedSecs = 0;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  if (!running) updateDisplay();
+}
+
+function updateDisplay() {
+  const m = Math.floor(remainingSeconds / 60);
+  const s = remainingSeconds % 60;
+  document.getElementById('timerDisplay').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  const progress = (totalSeconds - remainingSeconds) / totalSeconds;
+  const offset = CIRCUMFERENCE * (1 - progress);
+  document.getElementById('progressCircle').style.strokeDashoffset = offset;
+  const elapsed = totalSeconds - remainingSeconds;
+  const em = Math.floor(elapsed / 60);
+  const es = elapsed % 60;
+  document.getElementById('timerLabel').textContent = running ? `Elapsed: ${String(em).padStart(2,'0')}:${String(es).padStart(2,'0')}` : (remainingSeconds === totalSeconds ? 'Ready' : 'Paused');
+}
+
+function startPause() {
+  if (running) {
+    clearInterval(interval);
+    running = false;
+    document.getElementById('startBtn').textContent = '▶ Resume';
+    document.getElementById('statusBar').textContent = 'Session paused';
+    updateDisplay();
+  } else {
+    if (remainingSeconds <= 0) { resetTimer(); return; }
+    intervalBellSecs = parseInt(document.getElementById('intervalSel').value) * 60;
+    running = true;
+    document.getElementById('startBtn').textContent = '⏸ Pause';
+    document.getElementById('statusBar').textContent = '🧘 Meditating...';
+    if (elapsedSecs === 0) playBell('start');
+    interval = setInterval(tick, 1000);
+  }
+}
+
+function tick() {
+  elapsedSecs++;
+  remainingSeconds--;
+  if (intervalBellSecs > 0 && elapsedSecs % intervalBellSecs === 0 && remainingSeconds > 0) playBell('interval');
+  if (remainingSeconds <= 0) {
+    clearInterval(interval);
+    running = false;
+    remainingSeconds = 0;
+    document.getElementById('startBtn').textContent = '▶ Start';
+    document.getElementById('statusBar').textContent = '✅ Session complete! Well done.';
+    document.getElementById('timerLabel').textContent = 'Complete';
+    playBell('end');
+    updateDisplay();
+    return;
+  }
+  updateDisplay();
+}
+
+function resetTimer() {
+  clearInterval(interval);
+  running = false;
+  elapsedSecs = 0;
+  remainingSeconds = totalSeconds;
+  document.getElementById('startBtn').textContent = '▶ Start';
+  document.getElementById('statusBar').textContent = 'Press Start to begin your session';
+  document.getElementById('progressCircle').style.strokeDashoffset = 0;
+  updateDisplay();
+}
+
+document.getElementById('progressCircle').style.strokeDasharray = CIRCUMFERENCE;
+document.getElementById('progressCircle').style.strokeDashoffset = 0;
+updateDisplay();
+</script>
+</body>
 </html>
