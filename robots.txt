@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+
 Sitemap: https://meditation-timer.tabutility.com/sitemap.xml
