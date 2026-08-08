@@ -7,7 +7,6 @@
   <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
 <title>Meditation Timer — Tabutility</title>
 <meta name="description" content="Free online meditation timer. Set a duration with gentle bell sounds at start, interval and end. No account needed."/>
 <meta name="keywords" content="meditation timer, online meditation timer, mindfulness timer, meditation bell, guided meditation timer"/>
@@ -29,48 +28,49 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does the timer work when my screen is off?","acceptedAnswer":{"@type":"Answer","text":"Yes — as long as your browser tab is active, the timer continues running."}},{"@type":"Question","name":"Does it make a sound?","acceptedAnswer":{"@type":"Answer","text":"Yes — plays a gentle bell sound at the end using your browser's audio."}},{"@type":"Question","name":"Is the Meditation Timer free?","acceptedAnswer":{"@type":"Answer","text":"Yes — completely free, no sign-up needed."}},{"@type":"Question","name":"Do I need to sign up?","acceptedAnswer":{"@type":"Answer","text":"No account needed — works instantly in your browser."}}]}</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f7f4;color:#0f172a;min-height:100vh}
-nav{background:#ffffff;border-bottom:1px solid #e2e8f0;padding:14px 24px;display:flex;align-items:center;gap:16px}
-nav a{color:#64748b;text-decoration:none;font-size:14px}nav a:hover{color:#0f172a}
-nav .brand{color:#0f172a;font-weight:700;font-size:18px}
-.ad-banner{background:#ffffff;border-bottom:1px solid #e2e8f0;padding:4px;text-align:center}
+body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh}
+nav{background:#1e293b;border-bottom:1px solid #334155;padding:14px 24px;display:flex;align-items:center;gap:16px}
+nav a{color:#94a3b8;text-decoration:none;font-size:14px}nav a:hover{color:#f1f5f9}
+nav .brand{color:#4f46e5;font-weight:700;font-size:18px}
+.ad-banner{background:#1e293b;border-bottom:1px solid #334155;padding:4px;text-align:center}
 #app{max-width:600px;margin:8px auto;padding:0 16px 40px}
 h1{font-size:26px;font-weight:800;margin:24px 0 4px;text-align:center}
-.subtitle{color:#64748b;text-align:center;font-size:14px;margin-bottom:24px}
-.card{background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;padding:24px;margin-bottom:16px}
+.subtitle{color:#94a3b8;text-align:center;font-size:14px;margin-bottom:24px}
+.card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:24px;margin-bottom:16px}
 .presets{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:20px}
-.preset-btn{background:#f8f7f4;border:1px solid #e2e8f0;color:#64748b;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;transition:all .2s}
-.preset-btn:hover,.preset-btn.active{background:#0f172a;border-color:#0f172a;color:#f8f7f4;font-weight:600}
+.preset-btn{background:#0f172a;border:1px solid #334155;color:#94a3b8;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;transition:all .2s}
+.preset-btn:hover,.preset-btn.active{background:#4f46e5;border-color:#4f46e5;color:#0f172a;font-weight:600}
 .custom-row{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:20px}
-.custom-row label{color:#64748b;font-size:13px}
-.custom-row input{background:#f8f7f4;border:1px solid #e2e8f0;color:#0f172a;padding:8px 12px;border-radius:8px;font-size:14px;width:80px;text-align:center}
+.custom-row label{color:#94a3b8;font-size:13px}
+.custom-row input{background:#0f172a;border:1px solid #334155;color:#f1f5f9;padding:8px 12px;border-radius:8px;font-size:14px;width:80px;text-align:center}
 .circle-wrap{display:flex;justify-content:center;margin:20px 0}
 .progress-ring{transform:rotate(-90deg)}
 .progress-ring__bg{fill:none;stroke:#1e3a5f;stroke-width:10}
-.progress-ring__circle{fill:none;stroke:#0f172a;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .5s linear}
+.progress-ring__circle{fill:none;stroke:#4f46e5;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .5s linear}
 .timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-.timer-display{font-size:42px;font-weight:800;letter-spacing:2px;color:#0f172a}
-.timer-label{font-size:12px;color:#64748b;margin-top:4px}
+.timer-display{font-size:42px;font-weight:800;letter-spacing:2px;color:#f1f5f9}
+.timer-label{font-size:12px;color:#94a3b8;margin-top:4px}
 .ring-container{position:relative;width:200px;height:200px}
 .controls{display:flex;gap:12px;justify-content:center;margin-top:16px}
 .btn{padding:12px 28px;border-radius:10px;border:none;cursor:pointer;font-size:15px;font-weight:600;transition:all .2s}
-.btn-primary{background:#0f172a;color:#f8f7f4}.btn-primary:hover{background:#334155}
-.btn-secondary{background:#e2e8f0;color:#0f172a}.btn-secondary:hover{background:#475569}
+.btn-primary{background:#4f46e5;color:#0f172a}.btn-primary:hover{background:#4338ca}
+.btn-secondary{background:#334155;color:#f1f5f9}.btn-secondary:hover{background:#475569}
 .btn-danger{background:#ef4444;color:#fff}.btn-danger:hover{background:#dc2626}
 .options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-.opt-group label{display:block;font-size:12px;color:#64748b;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-.opt-group select{width:100%;background:#f8f7f4;border:1px solid #e2e8f0;color:#0f172a;padding:8px 10px;border-radius:8px;font-size:14px}
-.status-bar{text-align:center;padding:10px;font-size:13px;color:#0f172a;min-height:36px}
+.opt-group label{display:block;font-size:12px;color:#94a3b8;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.opt-group select{width:100%;background:#0f172a;border:1px solid #334155;color:#f1f5f9;padding:8px 10px;border-radius:8px;font-size:14px}
+.status-bar{text-align:center;padding:10px;font-size:13px;color:#4f46e5;min-height:36px}
 @media(max-width:480px){.options{grid-template-columns:1fr}.timer-display{font-size:34px}}
 </style>
   <meta name="theme-color" content="#1a1a2e" />
-  <style id="tabutility-brand">
-/* empty ad slots: reserve space, no bordered box */
-.ad-banner,.ad-slot,.ad-container{background:transparent!important;border:none!important;border-bottom:none!important;box-shadow:none!important}
+  <style id="tabutility-brand-v2">
+/* Canonical dark-surface spec (STYLE.md): indigo accent, white text on indigo */
+.btn,.toggle-btn.active,button.active{color:#fff!important}
+nav .brand{color:#fff}
+nav a:hover{color:#818cf8}
+input:focus,select:focus,textarea:focus{border-color:#818cf8!important}
 /* AdSense not yet approved: hide all ad frames (container min-height still reserves space). Remove these two lines after approval. */
 ins.adsbygoogle,.ad-banner iframe,.ad-slot iframe,.ad-container iframe{visibility:hidden!important}
-nav .brand{color:#0f172a}
-body{-webkit-font-smoothing:antialiased}
 </style>
 </head>
 <body>
@@ -89,7 +89,7 @@ body{-webkit-font-smoothing:antialiased}
     </div>
     <div class="custom-row">
       <label>Custom:</label>
-      <input type="number" id="customMin" min="1" max="120" value="10" oninput="setCustom()"/> <span style="color:#64748b;font-size:14px">min</span>
+      <input type="number" id="customMin" min="1" max="120" value="10" oninput="setCustom()"/> <span style="color:#94a3b8;font-size:14px">min</span>
     </div>
     <div class="options">
       <div class="opt-group">
@@ -134,23 +134,23 @@ body{-webkit-font-smoothing:antialiased}
 
 <div style="max-width:860px;margin-left:auto;margin-right:auto;margin-top:24px;margin-bottom:8px;padding:0 16px">
   <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px 24px">
-    <h2 style="font-size:15px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px">Related Tools</h2>
+    <h2 style="font-size:15px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px">Related Tools</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
-      <a href="https://pomodoro-timer.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid #e2e8f0;border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit">
-        <div style="font-size:13px;font-weight:600;color:#0f172a">Pomodoro Timer</div>
-        <div style="font-size:11px;color:#64748b;margin-top:2px">Productivity</div>
+      <a href="https://pomodoro-timer.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">Pomodoro Timer</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:2px">Productivity</div>
       </a>
-      <a href="https://sleep-calculator.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid #e2e8f0;border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit">
-        <div style="font-size:13px;font-weight:600;color:#0f172a">Sleep Calculator</div>
-        <div style="font-size:11px;color:#64748b;margin-top:2px">Wellness</div>
+      <a href="https://sleep-calculator.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">Sleep Calculator</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:2px">Wellness</div>
       </a>
-      <a href="https://water-intake-calculator.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid #e2e8f0;border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit">
-        <div style="font-size:13px;font-weight:600;color:#0f172a">Water Intake Calculator</div>
-        <div style="font-size:11px;color:#64748b;margin-top:2px">Wellness</div>
+      <a href="https://water-intake-calculator.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">Water Intake Calculator</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:2px">Wellness</div>
       </a>
-      <a href="https://countdown-timer.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid #e2e8f0;border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit">
-        <div style="font-size:13px;font-weight:600;color:#0f172a">Countdown Timer</div>
-        <div style="font-size:11px;color:#64748b;margin-top:2px">Productivity</div>
+      <a href="https://countdown-timer.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">Countdown Timer</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:2px">Productivity</div>
       </a>
     </div>
   </div>
@@ -158,22 +158,22 @@ body{-webkit-font-smoothing:antialiased}
 
 <div style="max-width:860px;margin-left:auto;margin-right:auto;margin-top:8px;margin-bottom:24px;padding:0 16px">
   <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px 24px">
-    <h2 style="font-size:15px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Frequently Asked Questions</h2>
+    <h2 style="font-size:15px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Frequently Asked Questions</h2>
     <div style="border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0">
-      <div style="font-size:14px;font-weight:600;color:#0f172a;margin-bottom:6px">Does the timer work when my screen is off?</div>
-      <div style="font-size:13px;color:#64748b;line-height:1.5">Yes — as long as your browser tab is active, the timer continues running.</div>
+      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px">Does the timer work when my screen is off?</div>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.5">Yes — as long as your browser tab is active, the timer continues running.</div>
     </div>
     <div style="border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0">
-      <div style="font-size:14px;font-weight:600;color:#0f172a;margin-bottom:6px">Does it make a sound?</div>
-      <div style="font-size:13px;color:#64748b;line-height:1.5">Yes — plays a gentle bell sound at the end (and at intervals if set) using your browser's Web Audio API.</div>
+      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px">Does it make a sound?</div>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.5">Yes — plays a gentle bell sound at the end (and at intervals if set) using your browser's Web Audio API.</div>
     </div>
     <div style="border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0">
-      <div style="font-size:14px;font-weight:600;color:#0f172a;margin-bottom:6px">Is this free?</div>
-      <div style="font-size:13px;color:#64748b;line-height:1.5">Yes — completely free, no sign-up needed.</div>
+      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px">Is this free?</div>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.5">Yes — completely free, no sign-up needed.</div>
     </div>
     <div style="padding:14px 0">
-      <div style="font-size:14px;font-weight:600;color:#0f172a;margin-bottom:6px">Works on mobile?</div>
-      <div style="font-size:13px;color:#64748b;line-height:1.5">Yes — fully responsive and works on any device.</div>
+      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px">Works on mobile?</div>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.5">Yes — fully responsive and works on any device.</div>
     </div>
   </div>
 </div>
@@ -330,27 +330,27 @@ updateDisplay();
 </script>
 
 <!-- embed-widget -->
-<div style="max-width:640px;margin:0 auto 32px;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:18px">
-  <h2 style="font-size:15px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Embed This Tool</h2>
+<div style="max-width:640px;margin:0 auto 32px;background:#1e293b;border:1px solid #334155;border-radius:12px;padding:18px">
+  <h2 style="font-size:15px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Embed This Tool</h2>
   <p style="font-size:13px;color:#64748b;margin-bottom:12px">Add this Meditation Timer to your website or blog for free — just paste this code:</p>
-  <div style="background:#f8f7f4;border:1px solid #e2e8f0;border-radius:8px;padding:12px;font-family:'Inter',monospace;font-size:12px;color:#7dd3fc;word-break:break-all;margin-bottom:10px" id="embed-code">&lt;iframe src=&quot;https://meditation-timer.tabutility.com/&quot; width=&quot;100%&quot; height=&quot;600&quot; frameborder=&quot;0&quot; style=&quot;border-radius:12px&quot; title=&quot;Meditation Timer by Tabutility&quot;&gt;&lt;/iframe&gt;
+  <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:12px;font-family:monospace;font-size:12px;color:#818cf8;word-break:break-all;margin-bottom:10px" id="embed-code">&lt;iframe src=&quot;https://meditation-timer.tabutility.com/&quot; width=&quot;100%&quot; height=&quot;600&quot; frameborder=&quot;0&quot; style=&quot;border-radius:12px&quot; title=&quot;Meditation Timer by Tabutility&quot;&gt;&lt;/iframe&gt;
 &lt;p style=&quot;font-size:12px&quot;&gt;&lt;a href=&quot;https://meditation-timer.tabutility.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Meditation Timer&lt;/a&gt; by &lt;a href=&quot;https://tabutility.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Tabutility&lt;/a&gt;&lt;/p&gt;</div>
-  <button onclick="navigator.clipboard.writeText(document.getElementById('embed-code').textContent).then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Embed Code',2000)})" style="background:#0f172a;color:#f8f7f4;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer">Copy Embed Code</button>
+  <button onclick="navigator.clipboard.writeText(document.getElementById('embed-code').textContent).then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Embed Code',2000)})" style="background:#4f46e5;color:#0f172a;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer">Copy Embed Code</button>
   <span style="font-size:11px;color:#475569;margin-left:12px">Free to use — the credit link helps others find the tool</span>
 </div>
-<div style="margin:0 auto 24px;max-width:640px;background:#ffffff;border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;border:1px solid #e2e8f0" onclick="window.open('https://www.amazon.com/s?k=health+nutrition+fitness+books&tag=tabutility-20','_blank','noopener noreferrer')" title="Improve your health?">
+<div style="margin:0 auto 24px;max-width:640px;background:#1e293b;border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;border:1px solid #334155" onclick="window.open('https://www.amazon.com/s?k=health+nutrition+fitness+books&tag=tabutility-20','_blank','noopener noreferrer')" title="Improve your health?">
   <span style="font-size:28px;flex-shrink:0">📚</span>
   <div style="min-width:0">
-    <div style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:3px">Improve your health?</div>
-    <div style="font-size:12px;color:#64748b">Browse health & nutrition books <span style="color:#f59e0b;white-space:nowrap">→ Browse on Amazon</span></div>
+    <div style="font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:3px">Improve your health?</div>
+    <div style="font-size:12px;color:#94a3b8">Browse health & nutrition books <span style="color:#f59e0b;white-space:nowrap">→ Browse on Amazon</span></div>
     <div style="font-size:10px;color:#475569;margin-top:3px">As an Amazon Associate we earn from qualifying purchases.</div>
   </div>
 </div>
-<footer style="border-top:1px solid #e2e8f0;background:#ffffff;margin-top:48px;padding:28px 24px;text-align:center;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;color:#64748b;line-height:1.8">
-<div style="font-weight:700;color:#0f172a;font-size:15px">⚡ Tabutility</div>
+<footer style="background:#1a1a2e;margin-top:48px;padding:28px 24px;text-align:center;font-family:'Segoe UI',system-ui,Arial,sans-serif;font-size:13px;color:#94a3b8;line-height:1.8">
+<div style="font-weight:700;color:#fff;font-size:15px">⚡ Tabutility</div>
 <div>Free, private, browser-based tools. No sign-up, no tracking.</div>
-<div><a href="https://tabutility.com" style="color:#0f172a;font-weight:600;text-decoration:none">All Tools</a> · <a href="https://tabutility.com/blog/" style="color:#64748b;text-decoration:none">Blog</a> · <a href="https://tabutility.com/#about" style="color:#64748b;text-decoration:none">About</a></div>
-<div style="margin-top:6px;color:#94a3b8">© 2026 Tabutility</div>
+<div><a href="https://tabutility.com" style="color:#818cf8;font-weight:600;text-decoration:none">All Tools</a> · <a href="https://tabutility.com/blog/" style="color:#94a3b8;text-decoration:none">Blog</a> · <a href="https://tabutility.com/#about" style="color:#94a3b8;text-decoration:none">About</a></div>
+<div style="margin-top:6px;color:#64748b">© 2026 Tabutility</div>
 </footer>
 </body>
 </html>
