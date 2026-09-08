@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
-  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin />
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
-<meta charset="UTF-8"/>
+  <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Meditation Timer — Tabutility</title>
 <meta name="description" content="Free online meditation timer. Set a duration with gentle bell sounds at start, interval and end. No account needed."/>
@@ -71,8 +69,6 @@ h1{font-size:26px;font-weight:800;margin:24px 0 4px;text-align:center}
 nav .brand{color:#fff}
 nav a:hover{color:#818cf8}
 input:focus,select:focus,textarea:focus{border-color:#818cf8!important}
-/* AdSense not yet approved: hide all ad frames (container min-height still reserves space). Remove these two lines after approval. */
-ins.adsbygoogle,.ad-banner iframe,.ad-slot iframe,.ad-container iframe{visibility:hidden!important}
 </style>
 <script type="application/ld+json">
     {
@@ -95,11 +91,10 @@ ins.adsbygoogle,.ad-banner iframe,.ad-slot iframe,.ad-container iframe{visibilit
     }
     }
     </script>
-  <meta name="robots" content="noindex, follow">
+    <meta name="robots" content="noindex, follow">
 </head>
 <body>
 <nav><span class="brand">⚡ Tabutility</span><a href="https://tabutility.com">← All Tools</a></nav>
-<div class="ad-banner"><ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-7039091592734005" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
 <div id="app">
   <h1>🧘 Meditation Timer</h1>
   <p class="subtitle">Set your session duration, relax, and let the bell guide you.</p>
@@ -205,11 +200,6 @@ ins.adsbygoogle,.ad-banner iframe,.ad-slot iframe,.ad-container iframe{visibilit
       <div style="font-size:13px;color:#94a3b8;line-height:1.5">Yes — fully responsive and works on any device.</div>
     </div>
   </div>
-</div>
-
-<div style="text-align:center;padding:8px">
-  <ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-7039091592734005" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
 </div>
 
 <script>
@@ -336,28 +326,6 @@ document.getElementById('progressCircle').style.strokeDasharray = CIRCUMFERENCE;
 document.getElementById('progressCircle').style.strokeDashoffset = 0;
 updateDisplay();
 </script>
-<script>
-(function(){
-  var ins=document.querySelectorAll('.adsbygoogle:not([data-lazy-done])');
-  var belowFold=Array.from(ins).slice(1);
-  if(!belowFold.length)return;
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(entries,obs){
-      entries.forEach(function(e){
-        if(e.isIntersecting){
-          (adsbygoogle=window.adsbygoogle||[]).push({});
-          e.target.setAttribute('data-lazy-done','1');
-          obs.unobserve(e.target);
-        }
-      });
-    },{rootMargin:'200px'});
-    belowFold.forEach(function(el){io.observe(el);});
-  } else {
-    belowFold.forEach(function(){(adsbygoogle=window.adsbygoogle||[]).push({});});
-  }
-})();
-</script>
-
 <!-- embed-widget -->
 <div style="max-width:640px;margin:0 auto 32px;background:#1e293b;border:1px solid #334155;border-radius:12px;padding:18px">
   <h2 style="font-size:15px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Embed This Tool</h2>
